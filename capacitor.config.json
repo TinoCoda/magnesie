@@ -1,0 +1,6 @@
+{
+  "appId": "app.magnesie.carnet",
+  "appName": "Magnésie",
+  "webDir": "www",
+  "android": { "backgroundColor": "#ECEFF2" }
+}

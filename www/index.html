@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ECEFF2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131C" media="(prefers-color-scheme: dark)">
+<title>Magnésie</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand-row">
+      <div class="brand">MAGNÉSIE<small>Carnet de calisthenics et mobilité</small></div>
+      <button class="btn ghost small" id="todaybtn" data-act="today" hidden>Aujourd'hui</button>
+    </div>
+    <div class="weeknav">
+      <button data-act="wk" data-n="-7" aria-label="Semaine précédente">‹</button>
+      <span id="weeklabel"></span>
+      <button data-act="wk" data-n="7" aria-label="Semaine suivante">›</button>
+    </div>
+    <div class="strip" id="strip"></div>
+  </header>
+  <main id="app"></main>
+</div>
+<nav id="nav" aria-label="Sections">
+  <div class="in">
+    <button data-act="tab" data-t="seance">Séance</button>
+    <button data-act="tab" data-t="mob">Mobilité</button>
+    <button data-act="tab" data-t="corps">Corps</button>
+    <button data-act="tab" data-t="bilan">Bilan</button>
+  </div>
+</nav>
+<div id="guide" hidden>
+  <div class="gwrap">
+    <div class="gtop"><button class="link" data-g="quit">Quitter</button><span class="eyebrow" id="gcrumb"></span></div>
+    <div class="bar" id="gbarwrap"><i id="gbar"></i></div>
+    <div class="gbody" id="gbody"></div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+<script src="anim.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
