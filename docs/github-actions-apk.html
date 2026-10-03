@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Tino">
+<title>Building the Magnésie APK</title>
+<style>
+    @page { size: A4; margin: 15mm; }
+    body { font-family: Arial, Helvetica, sans-serif; font-size: 10pt; line-height: 1.4; color: #1a1a1a; background: #fff; max-width: 180mm; margin: 0 auto; padding: 10px 16px; }
+    h1 { font-size: 17pt; margin: 0 0 2px; }
+    .meta { color: #555; font-size: 9pt; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 6px; }
+    h2 { font-size: 12pt; margin: 12px 0 5px; }
+    table { border-collapse: collapse; width: 100%; font-size: 9.5pt; }
+    td, th { border: 1px solid #bbb; padding: 3px 6px; text-align: left; vertical-align: top; }
+    th { background: #f0f0f0; }
+    ol { margin: 4px 0 0 18px; padding: 0; }
+    li { margin-bottom: 3px; }
+    svg { width: 100%; height: auto; display: block; margin: 4px 0; }
+    .legend { font-size: 9pt; color: #555; text-align: center; margin: 0; }
+    .note { background: #f5f5f5; border-left: 3px solid #888; padding: 5px 10px; font-size: 9.5pt; margin-top: 10px; }
+    code { font-size: 9pt; background: #f0f0f0; padding: 0 3px; }
+</style>
+</head>
+<body>
+
+<h1>Building the Magnésie APK with GitHub Actions</h1>
+<div class="meta">Applies to repository TinoCoda/magnesie · workflow file <code>.github/workflows/android.yml</code> · Created by Tino · 03.10.2026</div>
+
+<h2>1. What the workflow does</h2>
+<p style="margin:0 0 6px">The workflow “Compiler l'APK Android” runs on a GitHub server (Ubuntu) and turns the code into an installable Android APK. Nothing needs to be installed on your computer.</p>
+<table>
+    <tr><th style="width:26%">Step in the file</th><th style="width:30%">Command / action</th><th>Purpose</th></tr>
+    <tr><td>Check out code</td><td><code>actions/checkout@v4</code></td><td>Downloads the repository onto the server.</td></tr>
+    <tr><td>Node 22 + Java 21</td><td><code>setup-node</code>, <code>setup-java</code></td><td>Installs the tools Capacitor (Node) and Gradle (Java, Temurin) need; npm downloads are cached.</td></tr>
+    <tr><td>Install dependencies</td><td><code>npm ci</code></td><td>Installs the exact versions from <code>package-lock.json</code>.</td></tr>
+    <tr><td>Copy web app</td><td><code>npx cap sync android</code></td><td>Copies the <code>www/</code> folder into the Android project.</td></tr>
+    <tr><td>Build APK</td><td><code>./gradlew assembleDebug</code></td><td>Compiles the Android project (inside <code>android/</code>).</td></tr>
+    <tr><td>Upload result</td><td><code>upload-artifact@v4</code></td><td>Stores <code>app-debug.apk</code> as the downloadable artifact <strong>magnesie-apk</strong>.</td></tr>
+</table>
+
+<h2>2. Flow</h2>
+<svg viewBox="0 0 700 92" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif" font-size="11">
+    <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#555"/></marker></defs>
+    <g stroke="#555" stroke-width="1.2" fill="#f5f5f5">
+        <rect x="2" y="20" width="96" height="50" rx="5"/>
+        <rect x="124" y="20" width="96" height="50" rx="5"/>
+        <rect x="246" y="20" width="96" height="50" rx="5"/>
+        <rect x="368" y="20" width="96" height="50" rx="5"/>
+        <rect x="490" y="20" width="96" height="50" rx="5"/>
+        <rect x="612" y="20" width="86" height="50" rx="5" fill="#e6f2e6"/>
+    </g>
+    <g stroke="#555" stroke-width="1.2" marker-end="url(#a)">
+        <line x1="98" y1="45" x2="122" y2="45"/><line x1="220" y1="45" x2="244" y2="45"/>
+        <line x1="342" y1="45" x2="366" y2="45"/><line x1="464" y1="45" x2="488" y2="45"/>
+        <line x1="586" y1="45" x2="610" y2="45"/>
+    </g>
+    <g text-anchor="middle" fill="#1a1a1a">
+        <text x="50" y="42">git push</text><text x="50" y="57">to main</text>
+        <text x="172" y="42">Check out</text><text x="172" y="57">+ Node, Java</text>
+        <text x="294" y="42">npm ci</text><text x="294" y="57">(dependencies)</text>
+        <text x="416" y="42">cap sync</text><text x="416" y="57">(copy www/)</text>
+        <text x="538" y="42">gradlew</text><text x="538" y="57">assembleDebug</text>
+        <text x="655" y="42">Artifact</text><text x="655" y="57">magnesie-apk</text>
+    </g>
+    <text x="350" y="86" text-anchor="middle" fill="#555" font-size="10">runs on GitHub's server · about 5–10 minutes</text>
+</svg>
+<p class="legend">Green box = what you download.</p>
+
+<h2>3. How to use it</h2>
+<ol>
+    <li><strong>Start a build automatically:</strong> push to <code>main</code> (or <code>master</code>). Every push triggers a run.</li>
+    <li><strong>Start a build by hand:</strong> on GitHub open the <strong>Actions</strong> tab → “Compiler l'APK Android” → <strong>Run workflow</strong> (enabled by <code>workflow_dispatch</code>).</li>
+    <li><strong>Follow the run:</strong> click the run in the list. Yellow = running, green = success, red = failed. Click a step to read its log; a red step shows the error.</li>
+    <li><strong>Download the APK:</strong> open the finished run, scroll to <strong>Artifacts</strong> and download <strong>magnesie-apk</strong>. It is a zip containing <code>app-debug.apk</code>.</li>
+    <li><strong>Install on the phone:</strong> copy the APK to the phone and open it. Android asks once to allow “Install unknown apps” for the browser or file manager you used.</li>
+    <li><strong>Update the app:</strong> edit the code (e.g. <code>www/app.js</code>), commit, push to <code>main</code>, then repeat steps 3–5.</li>
+</ol>
+
+<div class="note"><strong>Good to know:</strong> this is a <em>debug</em> APK, fine for personal use but not signed for the Play Store. Run #1 on 03.10.2026 completed successfully.</div>
+
+</body>
+</html>
