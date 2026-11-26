@@ -247,6 +247,39 @@ var HANG = [121, 96];
 
   var pk = function (h) { var b = bodyLine([42.7, G - 10], G - h); return { p: b.p, t: b.t, hd: 20, A: [b.S[0] + 21, G - 3], A2: [b.S[0] + 22, G - 3], es: 1, L: [42.7, G - 10], L2: [46, G - 10], ft: 90, ft2: 90 }; };
   M.planche = { name: 'Planche', kf: [K(0, pk(22)), K(1.8, pk(24.5)), K(3.6, pk(22))], props: [] };
+
+  /* --- ajouts : sangle, isométriques, négatives --- */
+  var barProps = [{ k: 'l', a: 70, b: 14, c: 170, d: 14, w: 5 }, { k: 'l', a: 70, b: 14, c: 70, d: 40, w: 3 }, { k: 'l', a: 170, b: 14, c: 170, d: 40, w: 3 }];
+  var hangPose = function (sy, hd) {
+    return mix(pl(118, sy, 118, sy + 38), { A: [127, 14], A2: [129, 14], es: -1, L: [112, sy + 76], L2: [106, sy + 78], ks: -1, ft: 70, ft2: 70, hd: hd });
+  };
+  /* suspension active : on abaisse les épaules, le corps monte de quelques centimètres, les bras restent tendus */
+  M.hang = { name: 'Suspension active', kf: [K(0, hangPose(60, 4)), K(1.0, hangPose(60, 4)), K(1.8, hangPose(50, -2)), K(3.6, hangPose(50, -2)), K(4.4, hangPose(60, 4))], props: barProps };
+  /* tenue en haut de la traction */
+  M.isotrac = { name: 'Tenue en haut de la traction', kf: [K(0, tracDown), K(1.2, tracUp), K(4.2, tracUp), K(5.4, tracDown)], props: barProps };
+  /* négative : montée rapide (saut ou chaise), descente lente */
+  M.negtrac = { name: 'Traction négative', kf: [K(0, tracUp), K(0.7, tracUp), K(5.7, tracDown), K(6.4, tracDown), K(7.0, tracUp)], props: barProps };
+
+  /* vacuum : à quatre pattes, le ventre se creuse vers la colonne */
+  var vac = function (cv) { return { p: [113, 123], t: -10, cv: cv, hd: 0, AF: [90, 90], AF2: [90, 90], LF: [90, 180], LF2: [92, 180], ft: 180, ft2: 180 }; };
+  M.vacuum = { name: 'Vacuum abdominal', kf: [K(0, vac(-9)), K(1.6, vac(11)), K(4.0, vac(11)), K(5.2, vac(-9))], props: [] };
+
+  /* dead bug : sur le dos, bras opposé et jambe opposée s'allongent, bas du dos plaqué */
+  var db = function (nearLeg, farArm, farLeg, nearArm) {
+    return { p: [128, G - 5], t: 180, hd: 0, AF: nearArm, AF2: farArm, LF: nearLeg, LF2: farLeg, ft: 0, ft2: 0 };
+  };
+  var up = [-90, -90], tab = [-90, 0], ext = [-8, -8], ovh = [-172, -172];
+  M.deadbug = { name: 'Dead bug', kf: [K(0, db(tab, up, tab, up)), K(1.5, db(ext, ovh, tab, up)), K(3.0, db(tab, up, tab, up)), K(4.5, db(tab, ovh, ext, up)), K(6.0, db(tab, up, tab, up))], props: [] };
+
+  /* relevés de jambes allongé : jambes tendues, bas du dos au sol */
+  var lr = function (a) { return { p: [100, G - 5], t: 180, hd: 0, AF: [0, 0], AF2: [0, 0], LF: [a, a], LF2: [a + 2, a + 2], ft: a, ft2: a }; };
+  M.legraise = { name: 'Relevé de jambes allongé', kf: [K(0, lr(-6)), K(1.6, lr(-86)), K(2.0, lr(-86)), K(3.8, lr(-6))], props: [] };
+
+  /* handstand ventre au mur : mains près du mur, corps aligné, poitrine face au mur */
+  var hsb = function (a) {
+    return { p: [120, 80], t: 90 + a, AF: [90 + a, 90 + a], AF2: [88 + a, 88 + a], LF: [-90 + a, -90 + a], LF2: [-93 + a, -93 + a], ft: -90 + a, ft2: -93 + a, hd: 8, pin: ['wrist', 120, G - 2] };
+  };
+  M.hsbelly = { name: 'Handstand ventre au mur', kf: [K(0, hsb(-12)), K(1.6, hsb(-9)), K(3.2, hsb(-12))], props: [{ k: 'l', a: 90, b: 4, c: 90, d: G, w: 4 }] };
 })();
 
 /* --- mobilité --- */

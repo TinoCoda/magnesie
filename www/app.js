@@ -37,14 +37,21 @@ var EX={
   pistol:{n:'Pistol squat assisté',k:'r',lo:4,hi:6,rest:90,tip:'Talon au sol, genou dans l\'axe du pied, appuie-toi le moins possible.',hint:'Réduis l\'assistance : moins d\'appui sur la main ou le support.'},
   rdl:{n:'Soulevé de terre, une jambe',k:'r',lo:6,hi:8,rest:75,load:1,tip:'Dos plat, hanches vers l\'arrière, jambe arrière dans le prolongement du dos.',hint:'Ajoute 2 kg quand tu fais 8 reps propres sur toutes les séries.'},
   mollets:{n:'Mollets',k:'r',lo:12,hi:15,rest:45,load:1,tip:'Monte haut sur la pointe, marque une pause en haut, descends lentement.',hint:'Fais-les sur une marche, puis sur une seule jambe.'},
-  planche:{n:'Planche',k:'s',lo:30,hi:45,rest:45,tip:'Fessiers et abdos serrés, bassin dans l\'axe, ne creuse pas le dos.',hint:'Allonge la planche (bras plus avancés) ou ajoute 10 s.'}
+  planche:{n:'Planche',k:'s',lo:30,hi:45,rest:45,tip:'Fessiers et abdos serrés, bassin dans l\'axe, ne creuse pas le dos.',hint:'Allonge la planche (bras plus avancés) ou ajoute 10 s.'},
+  hang:{n:'Suspension active',k:'s',lo:20,hi:40,rest:45,tip:'Bras tendus, abaisse les épaules loin des oreilles sans plier les coudes, serre les côtes. Le corps monte de quelques centimètres.',hint:'Quand tu tiens 40 s, passe à la suspension à une main sur l\'autre poignet, ou ajoute une légère traction des omoplates.'},
+  negtrac:{n:'Tractions négatives',k:'r',lo:3,hi:5,rest:120,tip:'Monte avec une chaise ou en sautant, menton au-dessus de la barre, puis descends en 5 secondes, jusqu\'aux bras tendus.',hint:'Quand tu fais 5 descentes de 5 s sur toutes les séries, passe à 8 s, puis essaie une traction normale.'},
+  isotrac:{n:'Tenue en haut de la traction',k:'s',lo:5,hi:10,rest:90,tip:'Monte en traction, menton au-dessus de la barre, tire les coudes vers les hanches et tiens. Une tenue à mi-hauteur (90° aux coudes) est une bonne variante.',hint:'Quand tu tiens 10 s, ajoute du lest ou passe à la tenue à mi-hauteur après 5 s en haut.'},
+  vacuum:{n:'Vacuum abdominal',k:'s',lo:15,hi:30,rest:30,tip:'À quatre pattes, souffle tout l\'air et rentre le nombril vers la colonne. Tiens sans respirer, puis relâche. À faire de préférence à jeun.',hint:'Fais-le ensuite debout, puis assis, puis ajoute 5 s par semaine.'},
+  deadbug:{n:'Dead bug',k:'r',lo:8,hi:12,rest:45,tip:'Sur le dos, bas du dos plaqué au sol. Allonge un bras et la jambe opposée en soufflant, sans cambrer. Une répétition = un côté.',hint:'Ajoute un petit poids dans chaque main, ou ralentis à 4 s par répétition.'},
+  legraise:{n:'Relevés de jambes allongé',k:'r',lo:8,hi:12,rest:60,tip:'Jambes tendues, bas du dos plaqué au sol, monte à la verticale et redescends lentement sans toucher le sol.',hint:'Passe aux relevés de genoux suspendus à la barre, puis aux jambes tendues.'},
+  hsbelly:{n:'Handstand ventre au mur',k:'s',lo:15,hi:30,rest:90,tip:'Monte en marchant sur le mur, poitrine face au mur, mains près du mur. Côtes rentrées, fessiers serrés, pousse vers le plafond.',hint:'Quand tu tiens 30 s, éloigne un peu les mains du mur, puis tiens sans appuyer les pieds.'}
 };
 /* [exercice, séries, min, max] */
 var SESS={
-  push:{name:'Push + handstand',prep:1,ex:[['hs',5],['pompes',4],['pike',3],['dips',3],['tri',2]]},
-  pull:{name:'Pull + L-sit',ex:[['trac',5],['rowing',3],['lsit',5],['hollow',3],['curl',2]]},
-  legs:{name:'Jambes + gainage',ex:[['bulg',4],['pistol',3],['rdl',3],['mollets',3],['planche',3]]},
-  full:{name:'Full body + skills',prep:1,note:'Tractions et dips en superset : une série de chacun, puis repos court.',ex:[['hs',5],['trac',4],['dips',4,5,8],['lsit',5],['hollow',3],['planche',3]]}
+  push:{name:'Push + handstand',prep:1,ex:[['hs',3],['hsbelly',2],['pompes',4],['pike',3],['dips',3],['vacuum',3]]},
+  pull:{name:'Pull + L-sit',ex:[['hang',2],['trac',3],['negtrac',2],['isotrac',2],['rowing',3],['lsit',4],['hollow',2],['curl',1]]},
+  legs:{name:'Jambes + gainage',ex:[['bulg',4],['pistol',3],['rdl',3],['mollets',2],['deadbug',3],['legraise',2]]},
+  full:{name:'Full body + skills',prep:1,note:'Tractions et dips en superset : une série de chacun, puis repos court.',ex:[['hs',4],['trac',4],['dips',4,5,8],['lsit',5],['hollow',3],['planche',2],['isotrac',2]]}
 };
 var WEEK={0:{},1:{f:'push',m:'short'},2:{f:'pull',m:'short'},3:{m:'mid'},4:{f:'legs',m:'short'},5:{f:'full',m:'short'},6:{m:'long'}};
 
